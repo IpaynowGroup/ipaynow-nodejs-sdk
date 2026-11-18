@@ -57,6 +57,21 @@ test("PaymentNotifyResponse (N001): isSuccess when transStatus==A001, ignores re
   assert.equal(failure.isSuccess(), false);
 });
 
+test("PaymentNotifyResponse (N001): falls back to tradeStatus when transStatus is absent", () => {
+  const response = new PaymentNotifyResponse();
+  response.load({ tradeStatus: "A001" });
+  assert.equal(response.isSuccess(), true);
+  assert.equal(response.tradeStatus(), "A001");
+
+  const failure = new PaymentNotifyResponse();
+  failure.load({ tradeStatus: "A002" });
+  assert.equal(failure.isSuccess(), false);
+
+  const both = new PaymentNotifyResponse();
+  both.load({ transStatus: "A002", tradeStatus: "A001" });
+  assert.equal(both.isSuccess(), false);
+});
+
 test("RefundNotifyResponse (RN001): isSuccess when tradeStatus==A001", () => {
   const response = new RefundNotifyResponse();
   response.load({ tradeStatus: "A001" });

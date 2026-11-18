@@ -111,7 +111,7 @@ const action = config.endpoint(request.path);
 - 统一下单族（JSAPI/聚合码/小程序/H5/APP）：`responseCode === "A001"`（继承自 `IpaynowResponse`）。
 - 订单查询：同样使用 `responseCode === "A001"`。
 - 退款、退款查询、撤销、撤销查询：`responseCode === "R000"`。
-- 支付结果回调（`PaymentNotifyResponse`）：`transStatus === "A001"`。
+- 支付结果回调（`PaymentNotifyResponse`）：`transStatus === "A001"`；部分通道（如支付宝 APP 支付）只下发 `tradeStatus`，此时回退读取 `tradeStatus`（`status()` 返回最终判定值）。
 - 退款结果回调（`RefundNotifyResponse`）：`tradeStatus === "A001"`。
 
 统一下单响应额外提供便捷访问器：

@@ -1,6 +1,6 @@
 {
   "name": "ipaynow-nodejs-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "现在支付（iPayNow）Node.js SDK：统一下单、订单查询、退款、撤销、回调验签。",
   "type": "module",
   "main": "src/index.js",

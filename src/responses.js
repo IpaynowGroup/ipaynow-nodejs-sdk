@@ -113,10 +113,25 @@ export class ReverseQueryResponse extends IpaynowResponse {
   }
 }
 
-/** N001 支付回调：transStatus==A001 才算成功 */
+/** N001 支付回调：transStatus==A001 才算成功，部分通道下发 tradeStatus */
 export class PaymentNotifyResponse extends IpaynowResponse {
   isSuccess() {
-    return this.get("transStatus") === "A001";
+    return this.status() === "A001";
+  }
+
+  /** @returns {string|undefined} transStatus 字段 */
+  transStatus() {
+    return this.get("transStatus");
+  }
+
+  /** @returns {string|undefined} tradeStatus 字段 */
+  tradeStatus() {
+    return this.get("tradeStatus");
+  }
+
+  /** @returns {string|undefined} 交易状态：优先 transStatus，缺失回退 tradeStatus */
+  status() {
+    return this.get("transStatus") || this.get("tradeStatus");
   }
 }
 
